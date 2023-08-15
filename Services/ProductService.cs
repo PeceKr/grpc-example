@@ -33,5 +33,25 @@ namespace GRPCExample.Services
                 ProductId = product.ProductId
             });
         }
+
+        public override async Task<GetProductResponse> GetProduct(GetProductRequest request, ServerCallContext context)
+        {
+            if (request.ProductId <= 0)
+                throw new RpcException(new Status(StatusCode.InvalidArgument, "Id must be grater than 0"));
+
+            var product = await _dbContext.Products.FirstOrDefaultAsync(x => x.ProductId == request.ProductId);
+
+            if (product == null)
+                throw new RpcException(new Status(StatusCode.NotFound, "Product with this id not found"));
+
+            return new GetProductResponse
+            {
+                Name = product.Name,
+                Price = (double)product.Price,
+                ProductId = product.ProductId,
+                Quantity = product.Quantity
+            };
+
+        }
     }
 }
