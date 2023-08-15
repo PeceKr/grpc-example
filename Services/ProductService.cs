@@ -51,7 +51,28 @@ namespace GRPCExample.Services
                 ProductId = product.ProductId,
                 Quantity = product.Quantity
             };
+        }
 
+        public override async Task<GetAllProductsResponse> GetAllProducts(GetAllProductsRequest request, ServerCallContext context)
+        {
+            var response = new GetAllProductsResponse();
+            // TODO : add pagination
+            var products = await _dbContext.Products.ToListAsync();
+
+            if (products.Any())
+
+                foreach (var product in products)
+                {
+                    response.Products.Add(new GetProductResponse
+                    {
+                        Name = product.Name,
+                        Price = (double)product.Price,
+                        Quantity = product.Quantity,
+                        ProductId = product.ProductId,
+                    });
+                }
+
+            return response;
         }
     }
 }
