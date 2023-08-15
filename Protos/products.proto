@@ -15,8 +15,9 @@ service ProductProtoService {
 message CreateProductRequest 
 {
     string name = 1;
-    int32 quntity = 2;
+    int32 quantity = 2;
     double price =3;
+    string response_status = 4;
 }
 
 message CreateProductResponse 
@@ -31,8 +32,9 @@ message GetProductRequest {
 message GetProductResponse {
     int32 product_id =1;
     string name = 2;
-    int32 quntity = 3;
+    int32 quantity = 3;
     double price =4;
+    string response_status = 5;
 }
 message GetAllProductsRequest {}
 message GetAllProductsResponse 
@@ -42,8 +44,9 @@ message GetAllProductsResponse
 message UpdateProductRequest {
     int32 product_id =1;
     string name = 2;
-    int32 quntity = 3;
+    int32 quantity = 3;
     double price =4;
+    string response_status = 5;
 }
 message UpdateProductResponse {
     int32 product_id =1;
