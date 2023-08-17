@@ -2,14 +2,41 @@ syntax = "proto3";
 
 option csharp_namespace = "GRPCExample";
 
+import "google/api/annotations.proto";
+
 package products;
 
 service ProductProtoService {
-    rpc CreateProduct (CreateProductRequest) returns (CreateProductResponse);
-    rpc GetProduct (GetProductRequest) returns (GetProductResponse);
-    rpc GetAllProducts (GetAllProductsRequest) returns (GetAllProductsResponse);
-    rpc UpdateProduct (UpdateProductRequest) returns (UpdateProductResponse);
-    rpc DeleteProduct (DeleteProductRequest) returns (DeleteProductResponse);
+    rpc CreateProduct (CreateProductRequest) returns (CreateProductResponse){
+        option (google.api.http) = {
+            post : "/v1/products",
+            body : "*"
+        };
+    }
+    
+    rpc GetProduct (GetProductRequest) returns (GetProductResponse) {
+        option (google.api.http) = {
+            get : "/v1/products/{product_id}"
+        };
+    }
+
+    rpc GetAllProducts (GetAllProductsRequest) returns (GetAllProductsResponse) {
+        option (google.api.http) = {
+            get : "/v1/products"
+        };
+    }
+    rpc UpdateProduct (UpdateProductRequest) returns (UpdateProductResponse) {
+        option (google.api.http) = {
+            put : "/v1/products",
+            body : "*"
+        };
+    }
+
+    rpc DeleteProduct (DeleteProductRequest) returns (DeleteProductResponse){
+        option (google.api.http) = {
+            delete : "/v1/products/{product_id}"
+        };
+    }
 }
 
 message CreateProductRequest 
